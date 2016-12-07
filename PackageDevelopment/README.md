@@ -22,17 +22,47 @@ Name the package, e.g. `magicr` and click 'Create Project'
 
 ![](FileNewProjectNewDirectoryRpackageCreateProject.png)
 
-You just created your first package:
+You just created your first package!
+
+Here is how it looks like:
 
 ![](magicr.png)
 
-## Write the DESCRIPTION file
+As you can see, there have been some folders and files created.
+To file you are looking at now is called `hello.R` and is in 
+the `R` (the naming is not very creative here) folder. You can
+see that there is already put a function there, called `hello`.
 
-The `DESCRIPTION` file needs to be fixed:
+Creating such default example code is great for beginners to 
+get started. In this article, however, we will soon replace everything :sunglasses:.
 
-![](description.png)
+Additional files created are:
 
-Change it to:
+ * a `.RBuildignore` file, that tells the package which files to ignore. A good example of an ignored file is `README.md`, which
+   is the front page of your package its GitHub, but not used by the package itself
+ * a `DESCRIPTION` file, that summarizes your package
+ * a `NAMESPACE` file, that, among other, contains all your package its functions that are exported
+ * a folder called `man`, with the file `man/hello.Rd`, that contains the manual/documation of your package.
+
+In this article, we will:
+ 
+ * Write the `DESCRIPTION` file
+ * Write a function
+ * Create a vignette
+ * Create a test
+
+## Write the `DESCRIPTION` file
+
+The `DESCRIPTION` file summarizes your package. It contains the name, desciption, dependencies
+and many more options.
+
+The `DESCRIPTION` file has been default-created by RStudio and looks like this:
+
+![](Description.png)
+
+This `DESCRIPTION` file will give errors, alongside helful suggestions to fix these.
+As we are not yet in the phase of testing our package, I suggest to simply
+replace the code by this:
 
 ```
 Package: magicr
@@ -48,6 +78,11 @@ License: GPL-3
 LazyData: TRUE
 ```
 
+Feel free to instead leave the code as-is. There will be errors, but also helpful suggestions
+how to get rid of these.
+
+Instead of checking if the package works perfectly, we will first write a function.
+
 # Write a function 
 
 In this example, we will write a function
@@ -58,7 +93,7 @@ Go to the correct file: click on the 'R' folder:
 
 ![](MagicrR.png)
 
-Click the filename 'hello.R':
+Click the filename `hello.R`:
 
 ![](MagicrRcontent.png)
 

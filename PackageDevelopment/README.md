@@ -230,9 +230,16 @@ do_magic <- function(x)
 }
 ```
 
-Click 'Document (CTRL + SHIFT + D)'
+Click 'Document' or `CTRL + SHIFT + D`:
 
 ![](Document.png)
+
+You will see the first results:
+
+![](DocumentFirst.png)
+
+It appears that `roxygen2` modifies your `DESCRIPTION` file, creates a file `do_magic.Rd` and
+changes `NAMESPACE`. 
 
 Click 'Clean and Rebuild'
 
@@ -245,12 +252,60 @@ by typing this in the console:
 ?do_magic
 ```
 
+The help will be displayed at the bottom-right of the screen:
+
+![](HelpDo_magic.png)
+
+When we now press CTRL-SHIFT-E or click 'Check' at the 'Build' tab at the top right,
+there will be errors:
+
+![](PackageCheckThird.png)
+
+This error is caused, because `hello` is documented, but does not exist anymore.
+
+The non-existing function `hello` is located in the folder `man`. In the `Files` tab,
+go to the `man` folder. You see the two documentation files: `do_magic.Rd` for the existing `do_magic` 
+function, and `hello.Rd` for the absent `hello` function. Delete `hello.Rd` by checking
+the checkbox left of `hello.Rd` and click `Delete`: 
+
+![](DeleteHelloRd.png)
+
+When we now press CTRL-SHIFT-E or click 'Check' at the 'Build' tab at the top right,
+there will be no errors!
+
 # Write a vignette that describes and plots the function
+
+With our `do_magic` function created and documented, it is time
+to demonstrate it with a vignette.
+
+Creating a vignette is easy: in the Console, type:
 
 ```
 devtools::use_vignette("do_magic")
 ```
+A default vignette will be created:
 
+![](VignetteCreated.png)
+
+You can see that:
+
+ * There is a folder created, called `vignettes`
+ * There is a file created, called `do_magic.Rmd` (in the folder `vignettes`)
+ * The folder name `inst/doc` is added to `.gitignore`, which means that `git` will ignore that folder 
+
+In this article, we will ruthlessly convert it to:
+
+[](VignetteAdapted.png)
+
+(note that I cannot add the code in plaintext here).
+
+Press 'Knit' or CTRL-SHIFT-K to 'knit' the document:
+
+![](Knit.png)
+
+This will create a page like this:
+
+![](Knitted.png)
 
 # Test the package
 

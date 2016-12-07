@@ -53,16 +53,19 @@ In this article, we will:
 
 ## Write the `DESCRIPTION` file
 
-The `DESCRIPTION` file summarizes your package. It contains the name, desciption, dependencies
+The `DESCRIPTION` file summarizes your package. It contains the name, description, dependencies
 and many more options.
 
 The `DESCRIPTION` file has been default-created by RStudio and looks like this:
 
 ![](Description.png)
 
-This `DESCRIPTION` file will give errors, alongside helful suggestions to fix these.
-As we are not yet in the phase of testing our package, I suggest to simply
-replace the code by this:
+To test our package now, we press CTRL-SHIFT-E or click 'Check' at the 'Build' tab at the top right:
+
+![](PackageCheckFirst.png)
+
+Our default `DESCRIPTION` file will give errors, alongside helful suggestions to fix these.
+I suggest to simply replace the code by this:
 
 ```
 Package: magicr
@@ -78,10 +81,19 @@ License: GPL-3
 LazyData: TRUE
 ```
 
-Feel free to instead leave the code as-is. There will be errors, but also helpful suggestions
-how to get rid of these.
+When we now press CTRL-SHIFT-E or click 'Check' at the 'Build' tab at the top right,
+there will be no errors:
 
-Instead of checking if the package works perfectly, we will first write a function.
+![](PackageCheckAfterFirstFix.png)
+
+This is how we like it:
+
+```
+0 errors | 0 warnings | 0 notes
+```
+
+Before submitting your package to CRAN, it is a good
+idea to have exactly zero errors, warnings and notes.
 
 # Write a function 
 
@@ -143,9 +155,40 @@ And it worked:
 
 ![](RenameAfter.png)
 
+When we now press CTRL-SHIFT-E or click 'Check' at the 'Build' tab at the top right,
+there will be errors:
+
+![](PackageCheckSecond.png)
+
+The errors state that:
+
+ * `do_magic` lacks documentation
+ * the documentation about `hello` cannot find the `hello` function
+
+The errors are correct: we will have to add documentation now!
+
 ## Add documentation
 
-Click 'Project Options | Build Tools':
+For documentation, we will use the `roxygen2` package.
+
+First, we will install the `roxygen2` package.
+
+Click 'Tools | Install packages':
+
+[](InstallPackage.png)
+
+Then type `roxygen2`:
+
+![](InstallRoxygen2.png)
+
+While `roxygen2` is installed, you'll see a lot of information in the Console window:
+
+![](InstallRoxygen2Console.png)
+
+Here, I assume `roxygen2` gets installed without problems, as shown in the image. 
+
+Now `roxygen2` is installed, our package must use it as a documentation engine.
+To let this package use `roxygen2` for its documentation, click 'Project Options | Build Tools':
 
 ![](Roxygen.png)
 

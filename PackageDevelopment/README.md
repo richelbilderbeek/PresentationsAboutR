@@ -352,11 +352,13 @@ Testing you package by clicking 'Test Package' or using CTRL-SHIFT-T results in 
 
 Well done! You've created your first package!
 
-Next steps are:
+Extra steps are:
 
  * Put it on GitHub, see 
  * Add Travis CI, see 'Professional R development: being a good boy/girl'
- 
+
+These are described in a shorter form below. 
+
 # Extra: put it on GitHub
 
 Create a GitHub with the same name as your package. In this case, it is called `magicr`.

@@ -101,8 +101,8 @@ idea to have exactly zero errors, warnings and notes.
 # Write a function 
 
 In this example, we will write a function
-that has an error, incorrect style and has incomplete
-code coverage. 
+that has a non-standard style. Later, we will
+use tools to tell us what could be improved. 
 
 Go to the correct file: click on the 'R' folder:
 
@@ -115,11 +115,6 @@ Click the filename `hello.R`:
 Change the content to e.g. this:
 
 ```
-#' Multiples all values by two, 
-#'   except 42, which stays 42
-#' @param x input, must be numeric
-#' @return magicified output
-#' @export
 do_magic <- function(x)
 {
   if (!is.numeric(x)) {
@@ -131,9 +126,7 @@ do_magic <- function(x)
 }
 ```
 
-Again, this function
-has an error, incorrect style and has incomplete
-code coverage.
+Again, this function has a non-standard style.
 
 Also, we will rename this file to `do_magic.R`:
 
@@ -180,6 +173,9 @@ While `roxygen2` is installed, you'll see a lot of information in the Console wi
 ![](InstallRoxygen2Console.png)
 
 Here, I assume `roxygen2` gets installed without problems, as shown in the image. 
+
+After installing `roxygen2`, you may also want to install `knitr`, `rmarkdown` and `testthat`,
+which we will need later in this article.
 
 Now `roxygen2` is installed, our package must use it as a documentation engine.
 To let this package use `roxygen2` for its documentation, click 'Project Options | Build Tools':
@@ -290,25 +286,63 @@ This will create a page like this:
 
 # Add testthat to the package
 
-Write 
+```
+A program that has not been tested does not work.
+
+Bjarne Stroustrup. The C++ Programming Language. pp. 712.
+```
+
+As a testing framework, we will use the `testthat` package.
+If `testthat` has not been installed yet, install it 
+in a similar way to the `roxygen2` package. 
+
+If `testthat` is installed, you can start using it by calling: 
 
 ```
 devtools::use_test("do_magic")
 ```
 
-# Test the package
+After running this, RStudio will look like this:
 
-You even wrote some tests, using 'testthat' (probably stored in 
-a file calles *tests/testthat/test-do_magic.R*):
+![](TestthatFirst.png)
+
+What has happened, is:
+
+ * a folder called `tests` has been created, In it, there is a folder created called `testthat`
+ * a file has been created `test-do_magic.R` with some default text. It is located in the `tests/testthat` folder
+ * `testthat` has been added to the `Suggests` section of `DESCRIPTION`
+
+You can now test you package by clicking 'Test Package' or using CTRL-SHIFT-T:
+
+![](TestPackage.png)
+
+Because currently our code only tests if two plus two equals four, all (single one) tests pass:
+
+![](TestthatFirstTest.png) 
+
+# Write proper tests
+
+Change the code in *tests/testthat/test-do_magic.R* to:
 
 ```
 context("do_magic")
 
 test_that("do_magic: use", {
-  expect_equal(do_magic(42), 42)
   expect_equal(do_magic(1), 2)
+  expect_equal(do_magic(42), 42)
+  expect_error(
+    do_magic("Not numeric"),
+    "x must be numeric"
+  )
 })
 ```
+
+The tests check if everything in the documentation of `do_magic` is lived up to.
+Also the exception thrown by non-numeric input is checked. 
+
+Testing you package by clicking 'Test Package' or using CTRL-SHIFT-T results in a happy message:
+
+![](TestthatSecondTest.png)
 
 # Conclusion
 

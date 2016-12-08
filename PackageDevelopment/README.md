@@ -76,11 +76,12 @@ Title: This Package Does Magic
 Version: 0.1.0
 Author: richel@richelbilderbeek.nl
 Maintainer: Richel Bilderbeek <richel@richelbilderbeek.nl>
-Description: This package does magic. It calculates the density of the number
-  42 in a vector. The number 314 counts as two 42's. It even checks
-  if the input is valid!
+Description: This package does magic. Doing magic, in detail,
+    is multiplying all values by two, except 42, which should remain 42.
+    Doing magic includes checking if the input is a numeric.
 License: GPL-3
 LazyData: TRUE
+RoxygenNote: 5.0.1
 ```
 
 When we now press CTRL-SHIFT-E or click 'Check' at the 'Build' tab at the top right,
@@ -101,7 +102,7 @@ idea to have exactly zero errors, warnings and notes.
 
 In this example, we will write a function
 that has an error, incorrect style and has incomplete
-code coverage.
+code coverage. 
 
 Go to the correct file: click on the 'R' folder:
 
@@ -114,28 +115,19 @@ Click the filename `hello.R`:
 Change the content to e.g. this:
 
 ```
+#' Multiples all values by two, 
+#'   except 42, which stays 42
+#' @param x input, must be numeric
+#' @return magicified output
+#' @export
 do_magic <- function(x)
 {
-  if (length(x) == 0) {
-    stop("do_magic: x must be of non-zero length")
+  if (!is.numeric(x)) {
+    stop("x must be numeric");
   }
-  sum = 0
-  for (value in x) {
-    if (x == 42) {
-      sum = sum + 2
-      next
-    }
-    if (x == 314) {
-      sum = sum + 2
-      next
-    }
-    if (x == 42) {
-      sum = sum + 1
-      next
-    }
-  }
-  out = sum / length(x)
-  out
+  out = x * 2;
+  out = replace(out, out == 84, 42);
+  out;
 }
 ```
 
@@ -203,32 +195,19 @@ I like to let Roxygen rebuild everything at all times, but this is just personal
 Add the documentation like this:
 
 ```
-#' Does magic
-#' @param x The vector to work on
-#' @return the density of 42's in x, where 314 counts as two 42's.
+#' Multiples all values by two, 
+#'   except 42, which stays 42
+#' @param x input, must be numeric
+#' @return magicified output
 #' @export
 do_magic <- function(x)
 {
-  if (length(x) == 0) {
-    stop("do_magic: x must be of non-zero length")
+  if (!is.numeric(x)) {
+    stop("x must be numeric");
   }
-  sum = 0
-  for (value in x) {
-    if (x == 42) {
-      sum = sum + 42
-      next
-    }
-    if (x == 314) {
-      sum = sum + 2
-      next
-    }
-    if (x == 42) {
-      sum = sum + 1
-      next
-    }
-  }
-  out = sum / length(x)
-  out
+  out = x * 2;
+  out = replace(out, out == 84, 42);
+  out;
 }
 ```
 
@@ -309,7 +288,7 @@ This will create a page like this:
 
 ![](Knitted.png)
 
-# Test the package
+# Add testthat to the package
 
 Write 
 
@@ -317,8 +296,27 @@ Write
 devtools::use_test("do_magic")
 ```
 
- * Test the package
- * Write a test
- * Make the code crash on the bug
- * Fix the bug
+# Test the package
+
+You even wrote some tests, using 'testthat' (probably stored in 
+a file calles *tests/testthat/test-do_magic.R*):
+
+```
+context("do_magic")
+
+test_that("do_magic: use", {
+  expect_equal(do_magic(42), 42)
+  expect_equal(do_magic(1), 2)
+})
+```
+
+# Conclusion
+
+Well done! You've created your first package!
+
+Next steps are:
+
+ * Put it on GitHub, see 
+ * Add Travis CI, see 'Professional R development: being a good boy/girl'
  
+

@@ -60,6 +60,8 @@ The `DESCRIPTION` file has been default-created by RStudio and looks like this:
 
 ![](Description.png)
 
+As you can see, the file contains hints how to create a working `DESCRIPTION` file.
+
 To test our package now, we press CTRL-SHIFT-E or click 'Check' at the 'Build' tab at the top right:
 
 ![](PackageCheckFirst.png)

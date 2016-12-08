@@ -1,5 +1,9 @@
 # Package development
 
+Packages are central to R development. 
+
+In this article, a trivial example package is created.
+
 # Create a new package
 
 Start R Studio.
@@ -353,4 +357,71 @@ Next steps are:
  * Put it on GitHub, see 
  * Add Travis CI, see 'Professional R development: being a good boy/girl'
  
+# Extra: put it on GitHub
+
+Create a GitHub with the same name as your package. In this case, it is called `magicr`.
+
+Clone the GitHub to your local computer in a folder that will also have the name `magicr`, but
+resides somewhere else on your harddrive.
+
+```
+git clone https://github.com/richelbilderbeek/magicr
+```
+
+Combine the two `magicr` folders' content to created one single `magicr` folder that has both 
+a hidden `.git` folder and all the R package folders.
+
+Push it back to GitHub:
+
+```
+git add --all :/
+git commit -m "My first commit"
+git push
+```
+
+Well done, your package is now on GitHub!
+
+From now on, your package can be installed using
+
+```
+devtools::install_github("richelbilderbeek/magicr")
+```
+
+Everybody can now easily use the `do_magic` function!
+
+# Extra: add Travis CI
+
+To add the Travis CI continuous integration service, you'll need to:
+ 
+ * Activate Travis CI
+ * Activate Codecov
+ * Create a file called `.travis.yml` 
+
+Go to the Travis CI website, _www.travis-ci.org_, and sign in with your GitHub account.
+
+The sliders indicate the Travis CI activation state. 
+Go find your R package its GitHub and activate it.
+
+Go to the Codecov website, *https://codecov.io*, and sign in with your GitHub account.
+
+In the root folder of your package at a file called `.travis.yml` with the following content:
+
+```
+language: r
+cache: packages
+
+r_github_packages:
+  - jimhester/lintr
+  - jimhester/covr
+  - MangoTheCat/goodpractice
+
+after_success:
+  - Rscript -e "lintr::lint_package()"
+  - Rscript -e "covr::codecov()"
+  - Rscript -e "goodpractice::gp()"
+```
+
+Push *.travis.yml* to GitHub, and at the Travis CI site (with some delay) you can see
+the suggestions from the expert tools. 
+
 

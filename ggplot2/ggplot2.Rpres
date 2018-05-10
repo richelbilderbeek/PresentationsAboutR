@@ -1,0 +1,416 @@
+ggplot2
+========================================================
+author: Richel Bilderbeek
+date: 2018-05-09
+autosize: true
+
+```{r echo=FALSE}
+# Default:
+# width: 960
+# height: 700
+
+# Default + 10%
+# width: 1056
+# height: 770
+
+
+# Add this here above to set the slide sizes
+# width: 1920
+# height: 1080
+```
+
+[https://github.com/richelbilderbeek/Science](https://github.com/richelbilderbeek/Science)  ![CC-BY-NC-SA](CC-BY-NC-SA.png)
+
+![RuG and GELIFES and TECE logo](footer.png)
+
+```{r echo=FALSE}
+set.seed(44)
+```
+
+```{r echo=FALSE}
+# From https://stackoverflow.com/a/8197703
+gg_color_hue <- function(n) {
+  hues = seq(15, 375, length = n + 1)
+  hcl(h = hues, l = 65, c = 100)[1:n]
+}
+
+get_color <- function(i, n, alpha = 1.0) {
+  testit::assert(i >= 1)
+  testit::assert(n >= 1)
+  testit::assert(i <= n)
+  scales::alpha(colour = gg_color_hue(n)[i], alpha = alpha)
+}
+```
+
+Desire
+========================================================
+title: false
+![](meme_desire.jpg)
+
+Non-goal
+========================================================
+![](ggplot2_examples.png)
+
+<!-- I will give many examples to demonstrate ggplot2 -->
+<!-- One can use any search engine to do that -->
+
+Goal
+========================================================
+![ggplot2 logo](ggplot2_logo.png)
+***
+- Why use `ggplot2`
+- Philosophy behind `ggplot2`
+- Incorrect use of `ggplot2`
+- Correct use of `ggplot2`
+
+```{r}
+library(ggplot2)
+```
+
+<!-- This talk is about what one cannot find on Stack Overflow -->
+<!-- and prevents needing to go there -->
+
+Why use ggplot2?
+========================================================
+
+ * A grammar of graphics to express oneself in
+ * Forced to work tidily
+ * Recommended for teaching
+
+***
+![](meme_r_plot.jpg)
+
+Philosophy
+========================================================
+![Leland Wilkinson](leland_wilkinson.jpg)
+***
+![Grammar of Graphics](grammar_of_graphics_book.jpg)
+
+<!-- 'Grammar of Graphics' came out in 2005 -->
+
+Philosophy
+========================================================
+
+![Grammar of Graphics](grammar_of_graphics.png)
+
+<!-- 'Grammar of Graphics' has an idea behind it -->
+
+Philosophy
+========================================================
+![Hadley Wickham](hadley_wickham.jpg)
+***
+ * Grammar of Graphics
+ * Tidy Data
+
+![R for Data Science](r_for_data_science.png)
+*Wickham & Grolemund. R for data science. 2016*
+
+<!-- Wickham: most time is spent tidying data -->
+
+Frequency data
+========================================================
+
+![](meme_normal_distribution.jpg)
+
+Messy data
+========================================================
+
+```{r}
+messy_df <- data.frame(
+  matrix(rnorm(n = 1000), ncol = 1000)
+)
+colnames(messy_df) <- paste0(
+  "z", seq(1, 1000)
+)
+knitr::kable(messy_df[, 1:6])
+```
+
+Plotting messy data is easy without ggplot2
+========================================================
+
+```{r fig.width=12}
+hist(t(messy_df))
+```
+
+Plotting messy data is hard in ggplot2
+========================================================
+
+```{r fig.width=12}
+ggplot(
+  data.frame(z = t(messy_df[1, ])[, 1]),
+  aes(z)
+) + geom_histogram()
+```
+
+<!-- if data is messy, a ggplot2 call will look ugly  -->
+
+Tidy Data
+========================================================
+![tidyr logo](tidyr_logo.png)
+***
+ * One measurement per row, 'long form'
+ * Factors as factors
+
+```{r}
+library(tidyr)
+```
+
+
+Wrangling messy data to Tidy Data
+========================================================
+
+```{r}
+df <- gather(messy_df, "replicate", "value")
+knitr::kable(df[1:6, ])
+```
+
+Plotting Tidy Data is easy
+========================================================
+
+```{r fig.width=12}
+ggplot(df, aes(value)) +
+  geom_histogram()
+```
+
+Plotting Tidy Data is easy
+========================================================
+
+```{r fig.width=12}
+ggplot(df, aes(value)) +
+  geom_density()
+```
+
+Plotting Tidy Data is easy
+========================================================
+
+```{r fig.width=12}
+ggplot(df, aes(x = "", y = value)) +
+  geom_boxplot()
+```
+
+Plotting Tidy Data is easy
+========================================================
+
+```{r fig.width=12}
+ggplot(df, aes(x = "", y = value)) +
+  geom_violin()
+```
+
+Messy data
+========================================================
+
+```{r}
+messy_df <- data.frame(
+  matrix(
+    rnorm(n = 2002), ncol = 1001, nrow = 2
+  )
+)
+colnames(messy_df) <- c(
+  "treatment", paste0("z", seq(1, 1000))
+)
+messy_df[1, 1] <- "A"
+messy_df[2, 1] <- "B"
+knitr::kable(messy_df[, 1:6])
+```
+
+Plotting messy data is easy without ggplot2
+========================================================
+
+```{r fig.width=12}
+hist(as.numeric(messy_df[1, 2:1001]))
+hist(
+  as.numeric(messy_df[2, 2:1001]), 
+  add = TRUE
+)
+```
+
+<!-- Note: the reason I do not use a stacked histogram, -->
+<!-- is because there is no easy way without ggplot2 -->
+
+Plotting messy data is hard in ggplot2
+========================================================
+
+```{r fig.width=12}
+ggplot(
+  data.frame(
+    treatment = rep(
+      messy_df$treatment, each = 1000
+    ),
+    z = c(
+      t(messy_df[1, 2:1001])[, 1], 
+      t(messy_df[2, 2:1001])[, 1]
+    )
+  ),
+  aes(z, fill = treatment)
+) + geom_histogram(position = "identity")
+```
+
+<!-- if data is messy, a ggplot2 call will look ugly  -->
+
+Wrangling messy data to Tidy Data
+========================================================
+
+```{r}
+df <- gather(
+  messy_df, "replicate", "value", z1:z1000
+)
+knitr::kable(df[1:6, ])
+```
+
+Plotting Tidy Data is easy
+========================================================
+
+```{r fig.width=12}
+ggplot(
+  df, aes(x = value, fill = treatment)
+) + geom_histogram(position = "identity")
+```
+
+Plotting Tidy Data is easy
+========================================================
+
+```{r fig.width=12}
+ggplot(
+  df, aes(x = value, fill = treatment)
+) + geom_density()
+```
+
+Plotting Tidy Data is easy
+========================================================
+
+```{r fig.width=12}
+ggplot(
+  df, aes(x = treatment, y = value)
+) + geom_boxplot()
+```
+
+Plotting Tidy Data is easy
+========================================================
+
+```{r fig.width=12}
+ggplot(
+  df, aes(x = treatment, y = value)
+) + geom_violin()
+```
+
+Messy data
+========================================================
+
+```{r}
+messy_df <- data.frame(
+  treatment = rep(c(1, 2), times = 1000),
+  value = rnorm(n = 2000)
+)
+knitr::kable(head(messy_df))
+```
+
+<!-- messy data: treatment is not a factor  -->
+
+Plotting messy data is easy without ggplot2
+========================================================
+
+```{r fig.width=12}
+hist(messy_df[messy_df$treatment == 1, 2])
+hist(
+  messy_df[messy_df$treatment == 2, 2], 
+  add = TRUE
+)
+```
+
+Plotting messy data goes wrong in ggplot2
+========================================================
+
+```{r fig.width=12}
+ggplot(
+  messy_df, 
+  aes(x = value, fill = treatment)
+) + geom_histogram(position = "identity")
+```
+
+<!-- Does not seperate by treatment, would confuse a beginner -->
+
+Plotting messy data is hard in ggplot2
+========================================================
+
+```{r fig.width=12}
+ggplot(position = "identity") + 
+  geom_histogram(
+    data = messy_df[
+      messy_df$treatment == 1, 
+    ], 
+    aes(value), fill = "red"
+  ) + 
+  geom_histogram(
+    data = messy_df[
+      messy_df$treatment == 2, 
+    ], 
+    aes(value), fill = "blue"
+  )
+```
+
+<!-- if data is messy, a ggplot2 call will look ugly  -->
+
+Wrangling messy data to Tidy Data
+========================================================
+
+```{r}
+df <- messy_df
+df$treatment <- as.factor(df$treatment)
+knitr::kable(df[1:6, ])
+```
+
+Plotting Tidy Data is easy
+========================================================
+
+```{r fig.width=12}
+ggplot(
+  df, 
+  aes(x = value, fill = treatment)
+) + geom_histogram(position = "identity")
+```
+
+Plotting Tidy Data is easy
+========================================================
+
+```{r fig.width=12}
+ggplot(
+  df, 
+  aes(x = value, fill = treatment)
+) + geom_density()
+```
+
+Plotting Tidy Data is easy
+========================================================
+
+```{r fig.width=12}
+ggplot(
+  df, 
+  aes(x = treatment, y = value)
+) + geom_boxplot()
+```
+
+Plotting Tidy Data is easy
+========================================================
+
+```{r fig.width=12}
+ggplot(
+  df, 
+  aes(x = treatment, y = value)
+) + geom_violin()
+```
+
+Conclusions
+========================================================
+
+ * It is hard to plot messy data in `ggplot2`
+ * It is easy to plot Tidy Data in `ggplot2`
+ * Use Tidy Data, don't forget factors
+
+Questions?
+========================================================
+
+![](meme_plot_messy_data.jpg)
+
+[https://github.com/richelbilderbeek/Science](https://github.com/richelbilderbeek/Science)  ![CC-BY-NC-SA](CC-BY-NC-SA.png)
+
+

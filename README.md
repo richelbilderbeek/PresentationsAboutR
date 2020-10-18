@@ -8,4 +8,5 @@ My presentations about the R programming language.
  * `ggplot2`: [YouTube](https://youtu.be/bZYvmdJ-47A) [mp4](ggplot2/ggplot2.mp4)
  * `Rcpp` in 10 minutes: [ogv](http://richelbilderbeek.nl/rcpp.ogv) [YouTube](https://youtu.be/SgXVRHqh9l8)
  * Regular expressions and testthat: [ogv](http://richelbilderbeek.nl/06_regex_and_testthat.ogv) [YouTube](https://youtu.be/qKXl2gk_Z7U)
+ * TDD: add a feature: [ogv](http://richelbilderbeek.nl/tdd_in_r_add_feature.ogv) [YouTube](https://youtu.be/Qn_UYBz9k2w)
 

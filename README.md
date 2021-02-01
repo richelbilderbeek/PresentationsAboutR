@@ -9,6 +9,7 @@ My presentations about the R programming language.
  * `Rcpp` in 10 minutes: [ogv](http://richelbilderbeek.nl/rcpp.ogv) [YouTube](https://youtu.be/SgXVRHqh9l8)
  * Regular expressions and testthat: [ogv](http://richelbilderbeek.nl/06_regex_and_testthat.ogv) [YouTube](https://youtu.be/qKXl2gk_Z7U)
  * TDD: add a feature: [ogv](http://richelbilderbeek.nl/tdd_in_r_add_feature.ogv) [YouTube](https://youtu.be/Qn_UYBz9k2w)
+ * [Testing and mocking in R](https://github.com/richelbilderbeek/testing_and_mocking_in_r) 
  * pureseqtmr on Peregrine: [YouTube](https://youtu.be/pLU94NXRFhw) [ogv](http://richelbilderbeek.nl/pureseqtmr_on_peregrine.ogv)
 
 

@@ -11,5 +11,9 @@ My presentations about the R programming language.
  * TDD: add a feature: [ogv](http://richelbilderbeek.nl/tdd_in_r_add_feature.ogv) [YouTube](https://youtu.be/Qn_UYBz9k2w)
  * [Testing and mocking in R](https://github.com/richelbilderbeek/testing_and_mocking_in_r) 
  * pureseqtmr on Peregrine: [YouTube](https://youtu.be/pLU94NXRFhw) [ogv](http://richelbilderbeek.nl/pureseqtmr_on_peregrine.ogv)
-
+ * R and TDD: is_one [YouTube](https://youtu.be/IPGfW4lrxOc) [download (.ogv)](http://richelbilderbeek.nl/r_tdd_is_one.ogv)
+ * R and TDD: is_even [YouTube](https://youtu.be/4NBsCis584U) [download (.ogv)](http://richelbilderbeek.nl/r_tdd_is_even.ogv)
+ * R and TDD: is_odd [YouTube](https://youtu.be/Lah3fm3lUiA) [download (.ogv)](http://richelbilderbeek.nl/r_tdd_is_odd.ogv)
+ * R and TDD: fizz_buzz [YouTube](https://youtu.be/e_ZIfLMgPVc) [download (.ogv)](http://richelbilderbeek.nl/r_tdd_fizz_buzz.ogv)
+ * R and TDD: is_prime [YouTube](https://youtu.be/JtM_YSrbiek) [download (.ogv)](http://richelbilderbeek.nl/r_tdd_is_prime.ogv)
 
